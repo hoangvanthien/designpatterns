@@ -1,8 +1,22 @@
 package decorator;
-import org.junit.Assert.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+/**
+ * In addition to bookings, we now offer services in our center
+ * - You can use the Shower for 15 VND
+ * - You can use the Locker for 10 VND
+ * Also, a badminton booking costs 90 VND
+ *
+ * The price will add up the more services you use.
+ * The idea of Decorator pattern is to wrap an object with another object
+ * to provide more meaningful properties
+ *
+ * At first I have a BadmintonBooking, then I wrap it with a Locker,
+ * then I wrap the BadmintonBooking + Locker with a Shower,
+ * finally I have a BadmintonBooking + Locker + Shower
+ */
 public class Main {
     public static void main(String[] args) {
         System.out.println("Program started");
@@ -12,6 +26,10 @@ public class Main {
         assertEquals(100, s.fullPrice());
         s = new Shower(s);
         assertEquals(115, s.fullPrice());
+
+        assertTrue(s.wrappedBooking instanceof Locker);
+        assertTrue(((Locker)s.wrappedBooking).wrappedBooking instanceof BadmintonBooking);
+
         s = new Shower(b);
         assertEquals(105, s.fullPrice());
         System.out.println("All assertions passed!");        
